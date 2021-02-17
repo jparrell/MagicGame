@@ -14,9 +14,11 @@ public class movement : MonoBehaviour
     public float playerSpeed = 1.0f;
     public float jumpHeight = 8.0f;
     public float gravityValue = -15f;
+    public float frictionTime = 0.1f;
     private float horizontal = 0f;
     private float vertical = 0f;
-    private float friction = 0.9f;
+    private float friction = .95f;
+    private float frictionTimer = 0.0f;
 
 
 
@@ -31,6 +33,7 @@ public class movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        frictionTimer += Time.deltaTime;
         dashTimer += Time.deltaTime;
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
@@ -79,19 +82,21 @@ public class movement : MonoBehaviour
         if (Input.GetButtonDown("Dash") && dashTimer > dashCD)
         {
             playerVelocity.x += (Input.GetAxisRaw("Horizontal") * dashSpeed);
+            //playerVelocity.y = (Input.GetAxisRaw("Vertical") * dashSpeed);
             dashTimer = 0;
 
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
-        playerVelocity.x *= friction;
-        if (groundedPlayer)
+      //  controller.Move(playerVelocity * Time.deltaTime);
+  /*      if (frictionTimer > frictionTime)
         {
             playerVelocity.x *= friction;
-        }
-        Debug.Log(dashTimer);
-    
+            if (groundedPlayer)
+            {
+                playerVelocity.x *= friction;
+            }
+        }*/
 
 
     }
