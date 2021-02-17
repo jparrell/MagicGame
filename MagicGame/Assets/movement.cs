@@ -11,11 +11,12 @@ public class movement : MonoBehaviour
     public float dashCD = 2.0f;
     private float timer = 0f;
     private bool groundedPlayer;
-    public float playerSpeed = 2.0f;
+    public float playerSpeed = 1.0f;
     public float jumpHeight = 8.0f;
-    public float gravityValue = -9.8f;
+    public float gravityValue = -15f;
     private float horizontal = 0f;
     private float vertical = 0f;
+    private float friction = 0.9f;
 
 
 
@@ -30,8 +31,7 @@ public class movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        dashTimer = timer;
+        dashTimer += Time.deltaTime;
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -69,21 +69,29 @@ public class movement : MonoBehaviour
                        vertical = -1;
                    }
                }*/
-       // Debug.Log(dashTimer);
-        Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
-        controller.Move(move * Time.deltaTime * playerSpeed);
+        // Debug.Log(dashTimer);
+        playerVelocity.x += Input.GetAxisRaw("Horizontal");
+        controller.Move(playerVelocity * Time.deltaTime * playerSpeed);
         if (Input.GetButton("Jump") && groundedPlayer)
         {
             playerVelocity.y += jumpHeight;
         }
         if (Input.GetButtonDown("Dash") && dashTimer > dashCD)
         {
-            Debug.Log("gay");
-            playerVelocity.x += (Input.GetAxisRaw("Horizontal") + dashSpeed);
+            playerVelocity.x += (Input.GetAxisRaw("Horizontal") * dashSpeed);
             dashTimer = 0;
+
         }
+
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+        playerVelocity.x *= friction;
+        if (groundedPlayer)
+        {
+            playerVelocity.x *= friction;
+        }
+        Debug.Log(dashTimer);
+    
 
 
     }
