@@ -89,14 +89,14 @@ public class movement : MonoBehaviour
 
         playerVelocity.y += gravityValue * Time.deltaTime;
       //  controller.Move(playerVelocity * Time.deltaTime);
-  /*      if (frictionTimer > frictionTime)
+        if (frictionTimer > frictionTime)
         {
             playerVelocity.x *= friction;
             if (groundedPlayer)
             {
                 playerVelocity.x *= friction;
             }
-        }*/
+        }
 
 
     }
