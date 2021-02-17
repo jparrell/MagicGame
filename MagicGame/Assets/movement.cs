@@ -30,39 +30,41 @@ public class movement : MonoBehaviour
         {
             playerVelocity.y = 0f;
         }
- /*     if (Input.GetButton("Horizontal"))
-        {
-            horizontal += -1;
-            if (horizontal <-1)
-            {
-                horizontal = -1;
-            }
-        }
-        if (Input.GetButton("+Horizontal"))
-        {
-            horizontal += 1;
-            if (horizontal > 1)
-            {
-                horizontal = 1;
-            }
-        }
-        if (Input.GetButton("+Vertical"))
-        {
-            vertical += 1;
-            if (vertical > 1)
-            {
-                vertical = 1;
-            }
-        }
-        if (Input.GetButton("-Vertical"))
-        {
-            vertical += -1;
-            if (vertical < -1)
-            {
-                vertical = -1;
-            }
-        }*/
+        /*     if (Input.GetButton("Horizontal"))
+               {
+                   horizontal += -1;
+                   if (horizontal <-1)
+                   {
+                       horizontal = -1;
+                   }
+               }
+               if (Input.GetButton("+Horizontal"))
+               {
+                   horizontal += 1;
+                   if (horizontal > 1)
+                   {
+                       horizontal = 1;
+                   }
+               }
+               if (Input.GetButton("+Vertical"))
+               {
+                   vertical += 1;
+                   if (vertical > 1)
+                   {
+                       vertical = 1;
+                   }
+               }
+               if (Input.GetButton("-Vertical"))
+               {
+                   vertical += -1;
+                   if (vertical < -1)
+                   {
+                       vertical = -1;
+                   }
+               }*/
         Vector3 move = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
         controller.Move(move * Time.deltaTime * playerSpeed);
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
     }
 }
