@@ -5138,6 +5138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed97312be019a743819a53fcbc9a3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashSpeed: 3
+  dashCD: 2
   playerSpeed: 10
   jumpHeight: 4
   gravityValue: -9.8
