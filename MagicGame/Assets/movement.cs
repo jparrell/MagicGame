@@ -8,7 +8,7 @@ public class movement : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     public float playerSpeed = 2.0f;
-    private float jumpHeight = 1.0f;
+    public float jumpHeight = 8.0f;
     public float gravityValue = -9.8f;
     private float horizontal = 0f;
     private float vertical = 0f;
@@ -62,8 +62,13 @@ public class movement : MonoBehaviour
                        vertical = -1;
                    }
                }*/
-        Vector3 move = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        Debug.Log(Input.GetAxisRaw("Horizontal"));
+        Vector3 move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
         controller.Move(move * Time.deltaTime * playerSpeed);
+        if (Input.GetButton("Jump") && groundedPlayer)
+        {
+            playerVelocity.y += jumpHeight;
+        }
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
