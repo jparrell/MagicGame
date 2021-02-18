@@ -5138,11 +5138,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed97312be019a743819a53fcbc9a3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashSpeed: 100
-  dashCD: 2
   playerSpeed: 1
-  jumpHeight: 10
+  jumpHeight: 5
+  dashSpeed: 5
+  dashCD: 2
   gravityValue: -15
+  frictionTime: 0.1
 --- !u!212 &1427868557
 SpriteRenderer:
   m_ObjectHideFlags: 0
