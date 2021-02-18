@@ -5023,7 +5023,7 @@ GameObject:
   - component: {fileID: 1295960341}
   - component: {fileID: 1295960343}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5120,7 +5120,7 @@ GameObject:
   - component: {fileID: 1427868557}
   - component: {fileID: 1427868556}
   m_Layer: 0
-  m_Name: Square (1)
+  m_Name: PlayerSquare
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
