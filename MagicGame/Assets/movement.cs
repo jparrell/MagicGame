@@ -8,18 +8,14 @@ public class movement : MonoBehaviour
     private Vector3 playerVelocity;
 
     //player stats
-    private float playerSpeed = 50f;
-    private float jumpHeight = 2f;
-    private float jumpCharge = 2f;
+    public float playerSpeed = 1.0f;
+    public float jumpHeight = 8.0f;
 
     //dash stats
-    private float dashSpeed = 7f;
+    public float dashSpeed = 5f;
     private float dashTimer= 0f;
+    public float dashCD = 2.0f;
     private float dashPause = 0f;
-    private bool wave = false;
-    private Vector3 airdodge;
-    private float dodgeLength = 10f;
-    private int l = 0;
 
     //initialization
     private bool groundedPlayer;
@@ -27,12 +23,10 @@ public class movement : MonoBehaviour
     private float vertical = 0f;
 
     //world properties
-    public float gravityValue = -5f;
+    public float gravityValue = -15f;
     public float frictionTime = 0.1f;
     private float friction = .95f;
     private float frictionTimer = 0.0f;
-    private float lag = 0f;
-    private bool air;
 
 
    
@@ -48,95 +42,89 @@ public class movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        groundedPlayer = false;
-
-        //timers for movement
-        lag += Time.deltaTime;
+        
         frictionTimer += Time.deltaTime;
         dashPause -= Time.deltaTime;
         dashTimer -= Time.deltaTime;
-
-        //grounded check
-        Vector3 dwn = new Vector3(0, -1, 0);
-        Vector3 pos = new Vector3(0f, -0.5f, 0f);
-        if (Physics.Raycast(transform.position, dwn, 1f))
-        {
-            groundedPlayer = true;
-        }
-        groundedPlayer = controller.isGrounded; 
+        groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
-            lag = (-1 / 60);
+            playerVelocity.y = -1.0f;
         }
+        /*     if (Input.GetButton("Horizontal"))
+               {
+                   horizontal += -1;
+                   if (horizontal <-1)
+                   {
+                       horizontal = -1;
+                   }
+               }
+               if (Input.GetButton("+Horizontal"))
+               {
+                   horizontal += 1;
+                   if (horizontal > 1)
+                   {
+                       horizontal = 1;
+                   }
+               }
+               if (Input.GetButton("+Vertical"))
+               {
+                   vertical += 1;
+                   if (vertical > 1)
+                   {
+                       vertical = 1;
+                   }
+               }
+               if (Input.GetButton("-Vertical"))
+               {
+                   vertical += -1;
+                   if (vertical < -1)
+                   {
+                       vertical = -1;
+                   }
+               }*/
+        // Debug.Log(dashTimer);
+     //   if (Input.GetAxisR("Horizontal") )
         if (groundedPlayer)
         {
-              dashTimer = 0;
-              jumpCharge = 2;
+            dashTimer = 0;
+            Debug.Log(playerVelocity.y);
         }
-        if (groundedPlayer == false && air == false)
+        if (dashPause <= 0 && groundedPlayer)
         {
-            air = true;
-            jumpCharge -= 1;
+            playerVelocity.x += Input.GetAxisRaw("Horizontal");
         }
-        if (lag >= 0)
+        if (Input.GetButton("Jump") && groundedPlayer)
         {
-            if (dashPause <= 0 && groundedPlayer)
-            {
-                playerVelocity.x = Input.GetAxisRaw("Horizontal");
-            }
-            if (Input.GetButtonDown("Jump") && jumpCharge >= 1)
-            {
-                playerVelocity.y = jumpHeight;
-                jumpCharge -= 1f;
-            }
-            if (Input.GetButtonDown("Dash") && dashTimer <= 0 & !groundedPlayer)
-            {
-                playerVelocity.x = 0f;
-                playerVelocity.y = 0f;
-             
-                playerVelocity.x = (Input.GetAxisRaw("Horizontal") * dashSpeed);
-                playerVelocity.y = (Input.GetAxisRaw("Vertical") * dashSpeed);
-                StartCoroutine("wavedash");
-                dashPause = 0.2f;
-                wave = true;
-
-            }
+            playerVelocity.y += jumpHeight;
         }
-        if (groundedPlayer)
-        {
-            if (dashPause > 0f && dashPause <= 0.4f && wave)
-            {
-                int direction = 1;
-                if (playerVelocity.x < 0)
-                {
-                    direction = -1;
-                }
-                playerVelocity.x = Mathf.Sqrt((playerVelocity.x) * playerVelocity.x + playerVelocity.y * playerVelocity.y) * direction;
-                Debug.Log(playerVelocity.x);
-                wave = false;
-
-            }
-        }
-        if (groundedPlayer == false && dashPause < 0)
-        {
-            playerVelocity.y += gravityValue * Time.deltaTime;
-        }
-        if (dashPause < 0f)
-        {
-            controller.Move(playerVelocity * Time.deltaTime * playerSpeed);
-        }
-        if (dashPause > 0f && dashPause < .01f && wave)
+        if (Input.GetButtonDown("Dash") &! groundedPlayer && dashTimer <= 0)
         {
             playerVelocity.x = 0f;
             playerVelocity.y = 0f;
+            playerVelocity.x += (Input.GetAxisRaw("Horizontal") * dashSpeed);
+            playerVelocity.y = (Input.GetAxisRaw("Vertical") * dashSpeed);
+            dashTimer = 0;
+            dashPause = 0.5f;
         }
-    }
-    IEnumerator wavedash()
-    {
-        for (l = 0; l < 100; l++)
+        if (groundedPlayer && dashPause > 0f && dashPause <= 0.5f)
         {
-            controller.Move(playerVelocity * dashSpeed * Time.deltaTime);
-            yield return null;
+            playerVelocity.x = Mathf.Sqrt(Mathf.Abs(playerVelocity.x)*playerVelocity.x + playerVelocity.y * playerVelocity.y);
+            playerVelocity.y = -0.1f;
+            Debug.Log(playerVelocity.y);
         }
+
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime * playerSpeed);
+        //  controller.Move(playerVelocity * Time.deltaTime);
+        if (frictionTimer > frictionTime)
+        {
+            if (groundedPlayer)
+            {
+                playerVelocity.x *= friction;
+            }
+        }
+
+
     }
 }
