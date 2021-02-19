@@ -414,7 +414,7 @@ Transform:
   m_LocalScale: {x: 10, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1188862775
 GameObject:
@@ -5327,8 +5327,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1427868558}
   - component: {fileID: 1427868557}
-  - component: {fileID: 1427868556}
   - component: {fileID: 1427868559}
+  - component: {fileID: 1427868556}
   m_Layer: 0
   m_Name: PlayerSquare
   m_TagString: Untagged
@@ -5345,14 +5345,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1427868555}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed97312be019a743819a53fcbc9a3f7, type: 3}
+  m_Script: {fileID: 11500000, guid: a404a221fc41ea84cb34c2a0e3cb32d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 1
-  jumpHeight: 5
-  dashSpeed: 5
-  dashCD: 2
-  gravityValue: -15
+  gravityValue: -5
   frictionTime: 0.1
 --- !u!212 &1427868557
 SpriteRenderer:
