@@ -7,14 +7,19 @@ public class fireElement : MonoBehaviour
 {
     public GameObject FireElementPrefab;
     public Transform ElementPoint;
+    private float firecooldown = 0f;
 
     void Update()
     {
-        if (Input.GetButtonDown("FireElement"))
+        if (firecooldown == 0 && Input.GetButtonDown("FireElement"))
         {
-            
-            Instantiate(FireElementPrefab, ElementPoint.position, ElementPoint.rotation);
-            Debug.Log("work");
+            var firemana = Instantiate(FireElementPrefab, ElementPoint.position, ElementPoint.rotation);
+            firemana.transform.parent = gameObject.transform;
+            firecooldown = +1;      
         }
+        //if (firecooldown == 1 && Input.GetButtonDown("FireElement"))
+       // {
+            //Destroy(FireElementPrefab);
+        //}
     }   
 }
