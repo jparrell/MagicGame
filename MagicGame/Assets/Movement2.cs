@@ -25,6 +25,7 @@ public class Movement2 : MonoBehaviour
     private bool groundedPlayer;
     private float horizontal = 0f;
     private float vertical = 0f;
+    private bool facingRight = true;
 
     //world properties
     public float gravityValue = -5f;
@@ -102,6 +103,10 @@ public class Movement2 : MonoBehaviour
 
             }
         }
+        if (playerVelocity.x < 0 && facingRight || playerVelocity.x > 0 && !facingRight)
+        {
+            Flip();
+        }
         if (groundedPlayer)
         {
             if (dashPause > 0f && dashPause <= 0.4f && wave)
@@ -138,5 +143,10 @@ public class Movement2 : MonoBehaviour
             controller.Move(playerVelocity * dashSpeed * Time.deltaTime);
             yield return null;
         }
+    }
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        transform.Rotate(0f, 180f, 0f);
     }
 }
