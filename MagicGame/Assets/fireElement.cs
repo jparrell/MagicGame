@@ -5,35 +5,60 @@ using UnityEngine.UI;
 
 public class fireElement : MonoBehaviour
 {
+    public Transform FirstElementPoint;
+    public Transform SecondElementPoint;
+    public Transform ThirdElementPoint;
     public GameObject FireElementPrefab;
-    public Transform ElementPoint;
-    private float firePosition = 0f;
+    public GameObject WaterElementPrefab;
+    public GameObject LifeElementPrefab;
+    private float ElementPosition = 0f;
     
     void Update()
     {
-        if (firePosition == 0 && Input.GetButtonDown("FireElement"))
+        //fireCODE
+        if (ElementPosition == 0 && Input.GetButtonDown("FireElement"))
         {
-            summonFireElement(ElementPoint.position); 
+            summonFireElement(FirstElementPoint.position); 
         }
-        else if(firePosition == 1 && Input.GetButtonDown("FireElement"))
+        else if(ElementPosition == 1 && Input.GetButtonDown("FireElement"))
         {
-            Vector2 pos = new Vector2(ElementPoint.position.x +1.8f, ElementPoint.position.y);
+            Vector2 pos = new Vector2(SecondElementPoint.position.x , SecondElementPoint.position.y);
             summonFireElement(pos);
-            Debug.Log(firePosition);
         }
-        else if(firePosition == 2 && Input.GetButtonDown("FireElement"))
+        else if(ElementPosition == 2 && Input.GetButtonDown("FireElement"))
         {
-            Vector2 pos2 = new Vector2(ElementPoint.position.x +.9f, ElementPoint.position.y +1.2f);
+            Vector2 pos2 = new Vector2(ThirdElementPoint.position.x, ThirdElementPoint.position.y);
             summonFireElement(pos2);
+        }
+
+        //waterCODE
+        if (ElementPosition == 0 && Input.GetButtonDown("WaterElement"))
+        {
+            summonWaterElement(FirstElementPoint.position);
+        }
+        else if(ElementPosition == 1 && Input.GetButtonDown("WaterElement"))
+        {
+            Vector2 pos = new Vector2(SecondElementPoint.position.x, SecondElementPoint.position.y);
+            summonWaterElement(pos);
+        }
+        else if(ElementPosition == 2 && Input.GetButtonDown("WaterElement"))
+        {
+            Vector2 pos2 = new Vector2(ThirdElementPoint.position.x , ThirdElementPoint.position.y);
+            summonWaterElement(pos2);
+            Debug.Log(ElementPosition);
         }
     }   
 
     void summonFireElement(Vector2 position)
     {
-        firePosition += +1f;
-        var firemana = Instantiate(FireElementPrefab, position, ElementPoint.rotation);
+        ElementPosition += +1f;   
+        var firemana = Instantiate(FireElementPrefab, position, FirstElementPoint.rotation);
         firemana.transform.parent = gameObject.transform;
-        
-        //Debug.Log(firePosition);
+    }
+    void summonWaterElement(Vector2 position)
+    {
+        ElementPosition += +1f;
+        var Watermana = Instantiate(WaterElementPrefab, position, FirstElementPoint.rotation);
+        Watermana.transform.parent = gameObject.transform;
     }
 }

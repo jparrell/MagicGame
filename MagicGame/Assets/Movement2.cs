@@ -25,7 +25,7 @@ public class Movement2 : MonoBehaviour
     private bool groundedPlayer;
     private float horizontal = 0f;
     private float vertical = 0f;
-    private bool facingRight = true;
+    public bool facingRight = true;
 
     //world properties
     public float gravityValue = -5f;
