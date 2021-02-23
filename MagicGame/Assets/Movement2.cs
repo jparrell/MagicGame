@@ -129,6 +129,7 @@ public class Movement2 : MonoBehaviour
                 playerVelocity.y = (Input.GetAxisRaw("Vertical") * dashSpeed);
                 StartCoroutine("wavedash");
                 dashPause = 0.2f;
+                dashTimer = 5f;
                 wave = true;
 
             }
