@@ -25,7 +25,9 @@ public class Movement2 : MonoBehaviour
     private bool groundedPlayer;
     private float horizontal = 0f;
     private float vertical = 0f;
-    public bool facingRight = true;
+    private bool facingRight = true;
+    private bool moveLeft;
+    private bool moveRight;
 
     //world properties
     public float gravityValue = -5f;
@@ -34,6 +36,7 @@ public class Movement2 : MonoBehaviour
     private float frictionTimer = 0.0f;
     private float lag = 0f;
     private bool air;
+    private float airSpeedTimer;
 
 
 
@@ -56,6 +59,7 @@ public class Movement2 : MonoBehaviour
         frictionTimer += Time.deltaTime;
         dashPause -= Time.deltaTime;
         dashTimer -= Time.deltaTime;
+        airSpeedTimer -= Time.deltaTime;
 
         //grounded check
         Vector3 dwn = new Vector3(0, -1, 0);
@@ -81,9 +85,35 @@ public class Movement2 : MonoBehaviour
         }
         if (lag >= 0)
         {
+            if (dashPause <= 0 && groundedPlayer == false && airSpeedTimer < 0)
+            {
+                if (playerVelocity.x < 1.1)
+                {
+                    moveRight = true;
+                }
+                if (playerVelocity.x > -1.1)
+                {
+                    moveLeft = true;
+                }
+                Debug.Log(playerVelocity.x);
+                if (Input.GetAxisRaw("Horizontal") > .1 && moveRight)
+                {
+                    playerVelocity.x += Input.GetAxisRaw("Horizontal") / 10f;
+                    airSpeedTimer = .03f;
+                    moveRight = false;
+                }
+                if (Input.GetAxisRaw("Horizontal") < -.1 && moveLeft)
+                {
+                    playerVelocity.x += Input.GetAxisRaw("Horizontal") / 10f;
+                    airSpeedTimer = .03f;
+                    moveLeft = false; 
+                }
+            }
             if (dashPause <= 0 && groundedPlayer)
             {
+              
                 playerVelocity.x = Input.GetAxisRaw("Horizontal");
+               
             }
             if (Input.GetButtonDown("Jump") && jumpCharge >= 1)
             {
@@ -99,6 +129,7 @@ public class Movement2 : MonoBehaviour
                 playerVelocity.y = (Input.GetAxisRaw("Vertical") * dashSpeed);
                 StartCoroutine("wavedash");
                 dashPause = 0.2f;
+                dashTimer = 5f;
                 wave = true;
 
             }
@@ -117,7 +148,6 @@ public class Movement2 : MonoBehaviour
                     direction = -1;
                 }
                 playerVelocity.x = Mathf.Sqrt((playerVelocity.x) * playerVelocity.x + playerVelocity.y * playerVelocity.y) * direction;
-                Debug.Log(playerVelocity.x);
                 wave = false;
 
             }
