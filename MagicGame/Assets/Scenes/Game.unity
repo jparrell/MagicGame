@@ -5277,6 +5277,7 @@ GameObject:
   - component: {fileID: 1427868557}
   - component: {fileID: 1427868559}
   - component: {fileID: 1427868556}
+  - component: {fileID: 1427868560}
   m_Layer: 0
   m_Name: PlayerSquare
   m_TagString: Untagged
@@ -5382,3 +5383,18 @@ MonoBehaviour:
   FireElementPrefab: {fileID: 1543096479725036344, guid: 59f3d5411afdc31419bc1331337e9fa6,
     type: 3}
   ElementPoint: {fileID: 744326057}
+--- !u!114 &1427868560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427868555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76cd43cd7dac624448d71b17019e1a2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 501204285}
+  bulletPrefab: {fileID: 5011939229204779521, guid: 4dbadffaae19e82429efadd3f99a6de1,
+    type: 3}
